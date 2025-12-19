@@ -1,0 +1,32 @@
+Raspberry Pi 5 (naspi) — 192.168.1.234
+│
+├── Pi-hole
+│   ├─ DNS (port 53)
+│   ├─ Local DNS Records
+│   │   ├─ pihole.home   → 192.168.1.234
+│   │   ├─ files.home    → 192.168.1.234
+│   │   └─ home.home     → 192.168.1.234
+│   └─ Web UI (port 800)
+│
+├── Caddy (Reverse Proxy)
+│   ├─ HTTP :80
+│   ├─ Routes by hostname
+│   │   ├─ home.home   → Homepage (Docker :3000)
+│   │   ├─ pihole.home → Pi-hole UI (:800)
+│   │   └─ files.home  → FileBrowser (:8080)
+│   └─ (HTTPS disabled for `.home` domains — correct)
+│
+├── Docker
+│   ├─ Homepage container (:3000)
+│   ├─ FileBrowser container (:8080)
+│   └─ Future containers (media, monitoring, etc.)
+│
+├── NAS
+│   ├─ 4TB USB HDD
+│   ├─ Mounted locally on Pi
+│   └─ Shared via FileBrowser / future SMB/NFS
+│
+└── System Services
+    ├─ systemd
+    ├─ networking
+    └─ storage mounts
